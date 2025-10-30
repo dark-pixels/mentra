@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentora – AI Career & Education Navigator</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS (Loaded for utility classes, though most styling is custom) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            poppins: ['"Poppins"', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    /* Using Tailwind's @apply directive inside <style> for base styles */
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background-color: #F3F4F6;
+      color: #1F2937;
+    }
+
+    header {
+      background-color: #4F46E5;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    nav {
+      background-color: #FBBF24;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #1F2937;
+      text-decoration: none;
+      padding: 14px 20px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #10B981;
+      color: white;
+      border-radius: 6px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 50px 20px;
+      background: linear-gradient(90deg, rgba(79,70,229,0.1), rgba(16,185,129,0.1));
+    }
+
+    .hero h2 {
+      font-size: 26px;
+      color: #1F2937;
+    }
+
+    .hero p {
+      color: #6B7280;
+      font-size: 18px;
+      margin: 10px auto;
+      max-width: 600px;
+    }
+
+    .btn {
+      background-color: #4F46E5;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #10B981;
+    }
+    
+    .btn-green {
+        background-color: #10B981;
+    }
+    .btn-green:hover {
+        background-color: #059669;
+    }
+
+    section {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h3 {
+      color: #4F46E5;
+      font-size: 22px;
+      border-left: 6px solid #FBBF24;
+      padding-left: 10px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .login-box, .signup-box {
+      background: white;
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .login-box h2, .signup-box h2 {
+      color: #4F46E5;
+    }
+
+    /* Shared input styles */
+    input[type="text"], input[type="password"], input[type="email"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #D1D5DB;
+      border-radius: 8px;
+      font-family: inherit;
+      box-sizing: border-box; /* Added for consistent sizing */
+    }
+
+    .login-box input, .signup-box input {
+       width: 90%; /* Original style, keeping for specificity */
+    }
+
+    .login-box button, .signup-box button {
+      width: 95%;
+      padding: 10px;
+      background: #10B981;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .login-box button:hover, .signup-box button:hover {
+      background: #4F46E5;
+    }
+
+    .contact {
+      background-color: #E0E7FF;
+      border-radius: 12px;
+      padding: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    footer {
+      text-align: center;
+      background-color: #4F46E5;
+      color: white;
+      padding: 15px;
+      margin-top: 40px;
+      border-top: 5px solid #FBBF24;
+    }
+
+    /* NEW STYLES FOR DASHBOARD TABS */
+    .tab-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 2px solid #D1D5DB;
+      margin-bottom: 20px;
+    }
+    
+    .tab-btn {
+      padding: 10px 15px;
+      cursor: pointer;
+      background: #F3F4F6;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-size: 16px;
+      font-weight: 600;
+      color: #6B7280;
+      transition: all 0.3s;
+      border-radius: 6px 6px 0 0;
+    }
+    
+    .tab-btn.active {
+      color: #4F46E5;
+      border-bottom: 3px solid #4F46E5;
+      background: white;
+    }
+    
+    .tab-content {
+      display: none;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      animation: fadeIn 0.5s;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Styles for AI feature content */
+    .feature-content {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .feature-content h4 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1F2937;
+        margin: 0;
+    }
+    
+    .feature-content label {
+        font-weight: 600;
+        color: #374151;
+    }
+    
+    .gemini-output {
+        background: #F9FAFB;
+        border: 1px solid #E5E7EB;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 10px;
+        min-height: 100px;
+        white-space: pre-wrap; /* Renders newlines from the AI */
+        line-height: 1.6;
+        color: #374151;
+    }
+
+    .swot-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+    }
+    
+    .swot-grid div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Basic Loader */
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #4F46E5;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 10px auto;
+      display: none; /* Hidden by default */
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media(max-width:600px){
+      header h1 { font-size: 22px; }
+      .hero h2 { font-size: 22px; }
+      
+      .tab-container {
+        flex-direction: column;
+        gap: 5px;
+      }
+      .tab-btn {
+        width: 100%;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Mentora</h1>
+    <p>Your AI-Powered Career & Education Navigator</p>
+  </header>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#login">Login</a>
+    <a href="#signup">Sign Up</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home" class="hero">
+    <h2>Discover your perfect career path with AI</h2>
+    <p>Mentora helps you find the right education and career path using psychometric analysis, real-time job trends, and academic profiling.</p>
+    <button class="btn" onclick="scrollToLogin()">Get Started</button>
+  </section>
+
+  <!-- LOGIN PAGE -->
+  <section id="login">
+    <div class="login-box">
+      <h2>Login to Mentora</h2>
+      <input type="text" id="username" placeholder="Enter your username" required>
+      <input type="password" id="password" placeholder="Enter your password" required>
+      <button onclick="login()">Login</button>
+      <p style="margin-top:10px;">Don’t have an account? <a href="#signup" style="color:#4F46E5;">Sign Up</a></p>
+      <p id="login-message" style="color:red; margin-top:10px;"></p>
+    </div>
+  </section>
+
+  <!-- SIGN UP PAGE -->
+  <section id="signup">
+    <div class="signup-box">
+      <h2>Create Your Account</h2>
+      <input type="text" id="newUser" placeholder="Enter your name" required>
+      <input type="email" id="newEmail" placeholder="Enter your email" required>
+      <input type="password" id="newPass" placeholder="Create a password" required>
+      <button onclick="register()">Sign Up</button>
+      <p style="margin-top:10px;">Already have an account? <a href="#login" style="color:#4F46E5;">Login</a></p>
+      <p id="signup-message" style="color:red; margin-top:10px;"></p>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- ===== NEW AI-POWERED DASHBOARD SECTION ===== -->
+  <!-- ============================================= -->
+  <section id="dashboard" style="display:none;">
+    <h3>Welcome, <span id="user-name"></span> 👋</h3>
+    
+    <!-- Tab Navigation -->
+    <div class="tab-container">
+      <button class="tab-btn active" onclick="showTab('suggestions', this)">Personalized Suggestions</button>
+      <button class="tab-btn" onclick="showTab('swot', this)">SWOT Analyzer</button>
+      <button class="tab-btn" onclick="showTab('roadmap', this)">Career Roadmap</button>
+    </div>
+
+    <!-- Tab Content: Personalized Suggestions -->
+    <div id="suggestions" class="tab-content active">
+      <div class="feature-content">
+        <h4>Personalized Career Suggestions</h4>
+        <p>Tell us about your interests, skills, and passions. Our AI will suggest career paths tailored for you.</p>
+        <label for="user-interests">Enter your interests (e.g., "I like coding, art, and helping people"):</label>
+        <textarea id="user-interests" rows="4" placeholder="Type here..."></textarea>
+        <button class="btn btn-green" onclick="getCareerSuggestions()">Get Suggestions</button>
+        <div class="loader" id="loader-suggestions"></div>
+        <div class="gemini-output" id="output-suggestions">Your career suggestions will appear here...</div>
+      </div>
+    </div>
+
+    <!-- Tab Content: SWOT Analyzer -->
+    <div id="swot" class="tab-content">
+      <div class="feature-content">
+        <h4>SWOT Analyzer</h4>
+        <p>Understand your Strengths, Weaknesses, Opportunities, and Threats for career growth.</p>
+        <div class="swot-grid">
+            <div>
+                <label for="swot-strengths">Strengths:</label>
+                <textarea id="swot-strengths" rows="4" placeholder="e.g., Good at math, strong communicator..."></textarea>
+            </div>
+            <div>
+                <label for="swot-weaknesses">Weaknesses:</label>
+                <textarea id="swot-weaknesses" rows="4" placeholder="e.g., Procrastination, shy in public speaking..."></textarea>
+            </div>
+            <div>
+                <label for="swot-opportunities">Opportunities:</label>
+                <textarea id="swot-opportunities" rows="4" placeholder="e.g., Growing tech industry, new certifications..."></textarea>
+            </div>
+            <div>
+                <label for="swot-threats">Threats:</label>
+                <textarea id="swot-threats" rows="4" placeholder="e.g., High competition, rapid tech changes..."></textarea>
+            </div>
+        </div>
+        <button class="btn btn-green" onclick="getSwotAnalysis()">Analyze My SWOT</button>
+        <div class="loader" id="loader-swot"></div>
+        <div class="gemini-output" id="output-swot">Your SWOT analysis will appear here...</div>
+      </div>
+    </div>
+
+    <!-- Tab Content: Career Roadmap -->
+    <div id="roadmap" class="tab-content">
+      <div class="feature-content">
+        <h4>Career Roadmap</h4>
+        <p>Enter your dream career, and our AI will generate a high-level roadmap to help you get there.</p>
+        <label for="target-career">Enter your target career (e.g., "Software Engineer"):</label>
+        <input type="text" id="target-career" placeholder="Type here...">
+        <button class="btn btn-green" onclick="getCareerRoadmap()">Generate Roadmap</button>
+        <div class="loader" id="loader-roadmap"></div>
+        <div class="gemini-output" id="output-roadmap">Your career roadmap will appear here...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h3>About Mentora</h3>
+    <p>Mentora combines AI and machine learning to provide personalized career guidance. It analyzes your interests, education background, and market data to recommend the best path. The platform supports multiple languages, including Tamil, for inclusivity.</p>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <h3>Contact Us</h3>
+    <form onsubmit="showMessage(event)">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="4" placeholder="Your Message" required></textarea>
+      <button class="btn" type="submit">Send Message</button>
+    </form>
+    <p id="message" style="color:#1F2937;font-weight:600;margin-top:10px;"></p>
+  </section>
+
+  <footer>
+    <p>Made with ❤ for Smart India Hackathon 2025 | Mentora © 2025</p>
+  </footer>
+
+  <script>
+    // --- Original Page Logic ---
+    function scrollToLogin(){
+      document.getElementById('login').scrollIntoView({behavior:'smooth'});
+    }
+
+    function login(){
+      let user = document.getElementById("username").value;
+      let pass = document.getElementById("password").value;
+      let message = document.getElementById("login-message");
+      if(user && pass){
+        message.style.color = "#10B981";
+        message.textContent = "Login successful! Welcome, " + user + ".";
+        document.getElementById("user-name").textContent = user;
+        document.getElementById("login").style.display = "none";
+        document.getElementById("signup").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+        document.getElementById("dashboard").scrollIntoView({behavior:'smooth'});
+      } else {
+        message.style.color = "red";
+        message.textContent = "Please enter both username and password!";
+      }
+    }
+
+    function register(){
+      let name = document.getElementById("newUser").value;
+      let email = document.getElementById("newEmail").value;
+      let pass = document.getElementById("newPass").value;
+      let message = document.getElementById("signup-message");
+      if(name && email && pass){
+        message.style.color = "#10B981";
+        message.textContent = "Account created successfully! You can now log in.";
+        setTimeout(() => {
+          // Use hash change to navigate, which works well with the existing nav
+          window.location.hash = "#login";
+          // Scroll to login after hash change
+          document.getElementById('login').scrollIntoView({behavior:'smooth'});
+        }, 1500);
+      } else {
+        message.style.color = "red";
+        message.textContent = "Please fill all the fields!";
+      }
+    }
+
+    function showMessage(event){
+      event.preventDefault();
+      document.getElementById("message").textContent = "Thank you! We'll contact you soon.";
+      event.target.reset();
+    }
+
+    // --- NEW DASHBOARD & AI LOGIC ---
+
+    /**
+     * Handles tab switching in the dashboard
+     */
+    function showTab(tabId, element) {
+      // Hide all tab content
+      const tabContents = document.querySelectorAll('.tab-content');
+      tabContents.forEach(content => content.classList.remove('active'));
+      
+      // Deactivate all tab buttons
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      
+      // Show the selected tab content
+      document.getElementById(tabId).classList.add('active');
+      
+      // Activate the selected tab button
+      element.classList.add('active');
+    }
+
+    // --- Gemini API Call Functions ---
+
+    const API_KEY = ""; // Leave as-is, will be populated by the environment
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${API_KEY}`;
+
+    /**
+     * A robust fetch wrapper with exponential backoff retry logic.
+     * @param {string} url - The API endpoint URL.
+     * @param {object} options - The fetch options (method, headers, body).
+     * @param {number} retries - Number of retries left.
+     * @param {number} delay - Current delay in ms.
+     * @returns {Promise<object>} - The JSON response from the API.
+     */
+    async function fetchWithBackoff(url, options, retries = 3, delay = 1000) {
+        try {
+            const response = await fetch(url, options);
+            if (!response.ok) {
+                // Throw an error to trigger retry on server errors (e.g., 5xx)
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error(`Fetch attempt failed: ${error.message}. Retries left: ${retries}`);
+            if (retries > 0) {
+                // Wait for the delay, then retry with one less retry and doubled delay
+                await new Promise(resolve => setTimeout(resolve, delay));
+                return fetchWithBackoff(url, options, retries - 1, delay * 2);
+            } else {
+                // No retries left, throw the final error
+                throw new Error(`All fetch retries failed: ${error.message}`);
+            }
+        }
+    }
+
+    /**
+     * Reusable function to call the Gemini API.
+     * @param {string} systemPrompt - The system instruction for the AI.
+     * @param {string} userQuery - The user's input.
+     * @param {string} outputElementId - The ID of the element to display the result.
+     * @param {string} loaderElementId - The ID of the loader element to show/hide.
+     */
+    async function callGeminiAPI(systemPrompt, userQuery, outputElementId, loaderElementId) {
+      const outputElement = document.getElementById(outputElementId);
+      const loaderElement = document.getElementById(loaderElementId);
+
+      if (!userQuery.trim()) {
+        outputElement.textContent = "Please enter some text to get a response.";
+        outputElement.style.color = "red";
+        return;
+      }
+
+      loaderElement.style.display = "block"; // Show loader
+      outputElement.textContent = "Generating...";
+      outputElement.style.color = "#374151";
+
+      const payload = {
+        contents: [{ parts: [{ text: userQuery }] }],
+        systemInstruction: {
+          parts: [{ text: systemPrompt }]
+        },
+      };
+
+      try {
+        const result = await fetchWithBackoff(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const candidate = result.candidates?.[0];
+        if (candidate && candidate.content?.parts?.[0]?.text) {
+          // Replace newlines with <br> for HTML rendering
+          outputElement.innerHTML = candidate.content.parts[0].text
+                                        .replace(/\n/g, '<br>');
+        } else {
+          throw new Error("Invalid response structure from API.");
+        }
+      } catch (error) {
+        console.error("Error calling Gemini API:", error);
+        outputElement.textContent = `Sorry, an error occurred. Please try again. ${error.message}`;
+        outputElement.style.color = "red";
+      } finally {
+        loaderElement.style.display = "none"; // Hide loader
+      }
+    }
+
+    /**
+     * Feature 1: Get Career Suggestions
+     */
+    function getCareerSuggestions() {
+      const interests = document.getElementById('user-interests').value;
+      const systemPrompt = "You are 'Mentora', an AI career and education navigator. Based on the user's interests, provide 3 personalized career suggestions. For each, give a brief (1-2 sentence) description of the role and 2-3 key skills to develop. Format as a simple, easy-to-read list (e.g., using bolding for titles).";
+      callGeminiAPI(systemPrompt, interests, 'output-suggestions', 'loader-suggestions');
+    }
+
+    /**
+     * Feature 2: Get SWOT Analysis
+     */
+    function getSwotAnalysis() {
+      const strengths = document.getElementById('swot-strengths').value;
+      const weaknesses = document.getElementById('swot-weaknesses').value;
+      const opportunities = document.getElementById('swot-opportunities').value;
+      const threats = document.getElementById('swot-threats').value;
+      
+      const userQuery = `Here is my SWOT analysis:
+      - Strengths: ${strengths || 'Not provided'}
+      - Weaknesses: ${weaknesses || 'Not provided'}
+      - Opportunities: ${opportunities || 'Not provided'}
+      - Threats: ${threats || 'Not provided'}
+      
+      Please provide an actionable analysis based on this.`;
+      
+      const systemPrompt = "You are 'Mentora', an AI career analyst. The user has provided their Strengths, Weaknesses, Opportunities, and Threats. Provide a concise, actionable analysis (3-4 bullet points) based on this SWOT matrix to help them with their career planning. Focus on how to leverage strengths, mitigate weaknesses, seize opportunities, and handle threats.";
+      callGeminiAPI(systemPrompt, userQuery, 'output-swot', 'loader-swot');
+    }
+
+    /**
+     * Feature 3: Get Career Roadmap
+     */
+    function getCareerRoadmap() {
+      const career = document.getElementById('target-career').value;
+      const systemPrompt = "You are 'Mentora', an AI education navigator. The user wants a roadmap for a specific career. Create a simple, step-by-step roadmap (e.g., 5-7 high-level steps) for the user's target career. Include key milestones like 'Learn Foundational Skills', 'Build Projects', 'Get Certified (if applicable)', 'Gain Experience (Internships)', 'Network', etc. Keep it high-level, encouraging, and easy to follow.";
+      callGeminiAPI(systemPrompt, career, 'output-roadmap', 'loader-roadmap');
+    }
+  </script>
+
+</body>
+</html>
